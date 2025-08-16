@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { NewPost, Post, UpdatePost } from "../types/post";
+import type { NewPost, Post, PostId, UpdatePost } from "../types/post";
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
 
@@ -9,20 +9,22 @@ interface FetchPostsParams {
   limit?: number;
 }
 
-export type FetchPostsResponse = Post[];
-
 export const fetchPosts = async ({
   searchText = "",
   page = 1,
-  limit = 10,
-}: FetchPostsParams): Promise<FetchPostsResponse> => {
-  const response = await axios.get<FetchPostsResponse>("/posts", {
+  limit = 8,
+}: FetchPostsParams): Promise<Post[]> => {
+  const response = await axios.get<Post[]>("/posts", {
     params: {
       q: searchText,
       _page: page,
       _limit: limit,
     },
   });
+
+  console.log("response", response);
+  console.log(response.data);
+  
   return response.data;
 };
 
@@ -32,15 +34,16 @@ export const createPost = async (newPost: NewPost): Promise<Post> => {
 };
 
 export const editPost = async (
-  postId: number,
-  newDataPost: UpdatePost
+  postId: PostId,
+  updatePost: UpdatePost
 ): Promise<Post> => {
-  const response = await axios.patch<Post>(`/posts/${postId}`, newDataPost);
+  const response = await axios.patch<Post>(`/posts/${postId}`,  updatePost);
   return response.data;
 };
 
-export const deletePost = async (postId: number): Promise<void> => {
-  const response = await axios.delete(`/posts/${postId}`);
+export const deletePost = async (postId: PostId): Promise<Post> => {
+  console.log(postId);
+  const response = await axios.delete<Post>(`/posts/${postId}`);
   return response.data;
 };
 

@@ -1,12 +1,11 @@
 import css from "./SearchBox.module.css";
 
 interface SearchBoxProps {
-  // value?: string;                 // контрольований режим (опціонально)
-  defaultValue?: string;          // неконтрольований режим
+  searchQuery?: string;          
   onChange: (value: string) => void;
 }
 
-export default function SearchBox({ defaultValue, onChange }: SearchBoxProps) {
+export default function SearchBox({ searchQuery, onChange }: SearchBoxProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     onChange(e.target.value);
   };
@@ -16,8 +15,8 @@ export default function SearchBox({ defaultValue, onChange }: SearchBoxProps) {
       className={css.input}
       type="text"
       placeholder="Search posts"
-      // value={value}               //  контрольований
-      defaultValue={defaultValue} //  неконтрольований
+      // value={searchPost}               //  контрольований
+      defaultValue={searchQuery} //  неконтрольований
       onChange={handleChange}
     />
   );

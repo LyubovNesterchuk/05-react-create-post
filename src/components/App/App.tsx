@@ -72,7 +72,6 @@ export default function App() {
     <div className={css.app}>
       <header className={css.toolbar}>
         <SearchBox
-          // defaultValue=""
           onChange={debouncedSearchQuery}
         />
 
